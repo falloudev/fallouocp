@@ -18,7 +18,7 @@
     
     <!-- Begin page -->
     <div id="wrapper">
-        
+            
         <!-- Top Bar Start -->
         <div class="topbar">
             <!-- LOGO -->
@@ -107,7 +107,7 @@
                                                     @foreach($students as $student)
             <tr>
                 {{-- <td style="padding-left: 15px;">{!! $student->id !!}</td> --}}
-                <td><b>{!! $student->prenom !!}</b></td>
+                <td><a href="{{route('participant.show', $student->id)}}"><b>{!! $student->prenom !!}</b></a></td>
                 <td><b>{!! $student->nom !!}</b></td>
                 <td><b>{!! $student->age !!}</b></td>
                 <td><b>{!! $student->email !!}</b></td>
@@ -117,7 +117,7 @@
                 <td><b>{!! $student->ville !!}</b></td>
                 <td><b>{!! $student->diplome !!}</b></td>
                 <td><b>{!! $student->diplomem !!}</b></td>
-                <td><b>{!! $student->file !!}</b></td>
+                <td><a href="{{route('participant.show', $student->id)}}"><b>{!! $student->file !!}</a></b></td>
                 
                 <td>
                     <a class="btn btn-success btn-sm" href="students/{!! $student->id !!}/edit">Modifier / Details</a>

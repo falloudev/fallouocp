@@ -9,8 +9,8 @@
     
     
 
-    {!! Form::open(['id' => 'dataForm', 'url' => '/students']) !!}
-    <div class="form-group">
+    {{Form::open(['route' => 'students.store', 'files' => true])}} 
+   <div class="form-group">
         {!! Form::label('prenom', 'Prenom'); !!}
         {!! Form::text('prenom', null, ['class' => 'form-control']); !!}
     </div>
@@ -97,7 +97,7 @@
 </div>
 <div class="form-group">
         {!! Form::label('file', 'File'); !!}
-        {!! Form::file('file', null, ['class' => 'form-control']); !!}
+        <input type="file" name="file[]" multiple>
     </div>
 
     
@@ -106,4 +106,22 @@
     {!! Form::submit('Ajouter', ['class' => 'btn btn-primary pull-right']); !!}
 
     {!! Form::close() !!}
+
+     <script>
+    var form = document.getElementById('upload');
+    var request = XMLHttpRequest();
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var formdata = new FormData(form);
+
+        request.open('post', '/students.store');
+        request.addEventListener("load", transferComplete);
+        request.send(formdata);
+
+        function transferComplete(data){
+            console.log(data.currentTarget.response);
+        }
+    });
+    </script>
 @endsection()

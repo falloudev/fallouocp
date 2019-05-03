@@ -20,6 +20,11 @@ Route::get('generate-pdf','HomeController@generatePDF');
 
 Route::resource('students', 'StudentController');
 
+//Route::POST('upload', 'StudentController@upload')->name('file.upload');
+
+
+Route::get('participant/{id}', 'StudentController@participant')->name('participant.show');
+
 Route::get('/contrat', function () {
-    return view('contrat');
+    return view('contrat');     
 });

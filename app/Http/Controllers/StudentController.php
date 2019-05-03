@@ -40,12 +40,62 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-	    $data = $request->all();
-	    Student::create($data);
+	    //$data = $request->all();
+        //Student::create($data);
+       
+    
+        if($file = $request->file('file')){
 
-	    Session::flash('message', $data['prenom'] . ' added successfully');
-	    return redirect('/students');
+            $name = $file[0]->getClientOriginalName();
+            if($file[0]->move('images', $name)){
+                $students = new Student();
+                $students->prenom = $request->prenom;
+                $students->nom = $request->nom;
+                $students->age = $request->age;
+                $students->email = $request->email;
+                $students->specialite = $request->specialite;
+                $students->mobile = $request->mobile;
+                $students->region = $request->region;
+                $students->ville = $request->ville;
+                $students->diplome = $request->diplome;
+                $students->diplomem = $request->diplomem;
+                $students->file = implode([$name]);
+                //$students->file = $name;
+                $students->save();
+                   Session::flash('message', ' added successfully');
+                  return redirect('/students');
+
+            };
+        }
+        
+      /*  Student::create([
+            'prenom' => $request->prenom,
+             'nom'  => $request->nom,
+              'age'  => $request->age,
+               'email'  => $request->email,
+               'specialite'  => $request->specialite,
+               'mobile'  => $request->mobile,
+               'region'  => $request->region,
+               'ville'  => $request->ville,
+               'diplome'  => $request->diplome,
+               'diplomem'  => $request->diplomem, 
+            'file'  => implode(",",$request->file),
+
+        ]);  */
+
+	    //Session::flash('message', $data['prenom'] . ' added successfully');
+	    //return redirect('/students');
     }
+
+    public function participant($id)
+    {
+        //
+        $student = Student::find($id);
+        
+        $students = Student::orderBy('id')->get();
+        return view('students.show', compact('students','student'));
+    }
+
 
     /**
      * Display the specified resource.
